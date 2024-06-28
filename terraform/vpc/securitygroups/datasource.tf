@@ -1,6 +1,6 @@
 data "aws_vpc" "vpc" {
   filter {
-    name   = "tags:Name"
+    name   = "tag:Name"
     values = ["devops-vpc"]
   }
 }
