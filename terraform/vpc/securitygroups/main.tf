@@ -16,7 +16,7 @@ provider "aws" {
 
 resource "aws_security_group" "devops_security_group" {
   name   = "devops-security-group"
-  vpc_id = ""
+  vpc_id = data.aws_vpc.vpc.id
   tags = {
     Name = "devops-security-group"
   }

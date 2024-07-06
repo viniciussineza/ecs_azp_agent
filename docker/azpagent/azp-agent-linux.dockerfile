@@ -1,10 +1,7 @@
-FROM ubuntu:22.04
+FROM 520743652918.dkr.ecr.us-east-1.amazonaws.com/devopsecr:cloud-base
 ENV TARGETARCH="linux-x64"
-# Also can be "linux-arm", "linux-arm64".
 
-RUN apt update
-RUN apt upgrade -y
-RUN apt install -y curl git jq libicu70
+RUN echo | openssl s_client -showcerts -connect registry.terraform.io:443 2>/dev/null | awk '/-----BEGIN CERTIFICATE-----/, /-----END CERTIFICATE-----/' >> /usr/local/share/ca-certificates/ca-certificates.crt
 
 WORKDIR /azp/
 

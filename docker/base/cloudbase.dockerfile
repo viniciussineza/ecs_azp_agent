@@ -1,10 +1,15 @@
-FROM ubuntu:latest
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND noninteractive
 
 LABEL maintainer="Cloud Varejo"
 
 RUN \
     apt-get update; \
-    apt-get install -y gnupg software-properties-common wget unzip; \
+    apt-get install -y git jq libicu70 gnupg software-properties-common wget unzip ca-certificates curl
+
+RUN \
+    apt-get update; \
     wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null; \
     echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list; \
     apt-get update; \
@@ -16,7 +21,6 @@ RUN \
     apt-get install -y ansible
 
 RUN \
-    apt-get install -y ca-certificates curl; \
     install -m 0755 -d /etc/apt/keyrings; \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc; \
     chmod a+r /etc/apt/keyrings/docker.asc ; \
